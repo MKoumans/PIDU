@@ -1,0 +1,22 @@
+\begin{table}[t]
+\centering
+\small
+\caption{\textbf{Performance comparison.}}
+\label{tab:timings_case1}
+\begin{tabular}{rll}
+\toprule
+\textbf{Method} & \textbf{MAPE} & \textbf{Time $\pm$ Std (ms)} \\
+\midrule
+LMA (baseline) & 3.71 & $31091.37 \pm 7458.95$ \\
+LMA (noisy) & 0.15 & $17845.63 \pm 9123.36$ \\
+LMA (random) & 0.21 & $7170.69 \pm 6332.93$ \\
+\textbf{CNN ($b=1$)} & 0.18 & $\mathbf{5.22 \pm 0.04}$ \\
+DU ($b=1$) & 0.13 & $225.14 \pm 0.40$ \\
+PIDU ($b=1$) & 0.11 & $244.33 \pm 0.47$ \\
+\cmidrule{1-3}
+CNN ($b=256$) & 0.18 & $0.02 \pm 0.00$ \\
+DU ($b=256$) & 0.13 & $0.91 \pm 0.00$ \\
+PIDU ($b=256$) & 0.11 & $1.22 \pm 0.00$ \\
+\bottomrule
+\end{tabular}
+\end{table}

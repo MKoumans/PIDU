@@ -1,0 +1,38 @@
+# Use case 2 (dynamics, SrTiO3 thin film): full run configuration.
+# Consumed via `python -m pidu.train --config configs/case2.yaml`; CLI flags override these values.
+usecase: 2
+model: PIDU
+epochs: 200
+device: cuda:0
+
+# Datasets (sizes are powers of 2)
+load_ds: usecase2/case2_{ds_name}_n2_{number}_wsn
+ds_sizes: [14, 10, 10]
+exp_ds: true
+nwsn: false
+wgn: 0.0
+
+# Model / optimisation
+unfolds: 3
+optimisation_mode: scale-optics-type
+optimiser: adamw
+optimiser_algo: nash
+lr: 1.0e-4
+weight_decay: 1.0
+batch_size: 256
+betas: [0.9, 0.999]
+eps: 1.0e-4
+clip_grad_norm: 1.0
+loss_alpha: 0.05
+
+scheduler_type: StepLR
+scheduler_step_size1: 10
+scheduler_gamma1: 0.95
+
+mixed_precision: false
+initialiser: xavier
+shuffle: true
+track_gradient: false
+cnn_size: 1.0
+
+output_name: loss

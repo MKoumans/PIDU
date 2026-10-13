@@ -1,0 +1,26 @@
+name: PIDU
+
+services:
+  app:
+    container_name: pidu
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: ghcr.io/mkoumans/pidu:latest
+    volumes:
+      - ../:/app
+    stdin_open: true
+    tty: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  env:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.env
+    image: ghcr.io/mkoumans/pidu-env:latest

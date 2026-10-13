@@ -1,0 +1,40 @@
+# Artifacts: generated locally or downloaded with `pidu-hub download`
+data/datasets/
+data/labels/
+# SrTiO3 measurements: not released
+data/experimental_data/STO/
+# use case 3 measurements and RefFIT models: not released
+data/experimental_data/metastructure/
+data/reffit_fit_files/
+models/
+outputs/
+research/**/output-*/
+
+# Cluster / container
+*.sif
+*.out
+slurm-out/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+.coverage
+htmlcov/
+
+# Editors / local tooling
+.idea/
+.vscode/
+.gemini/
+.mcp.json
+.codegraph
+.env
+.env.*
+# Test artefacts
+tests/data/images/

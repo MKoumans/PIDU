@@ -1,0 +1,13 @@
+.git/
+data/datasets/
+data/labels/
+models/
+outputs/
+slurm-out/
+*.sif
+**/__pycache__/
+*.py[cod]
+.venv/
+venv/
+.idea/
+.vscode/

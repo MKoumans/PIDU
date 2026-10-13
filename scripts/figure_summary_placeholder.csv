@@ -1,0 +1,16 @@
+# PLACEHOLDER from the current Table 1 (rerun not yet validated). Replace this file after the rerun; the plotting script needs no change.
+# mape_*: MAPE of the stated unit (see 'mape_unit': fraction -> x100 -> %). time_*: ms per spectrum at the stated batch size.
+# *_std blank = no error bar. n_seeds: 8 for networks, 1 for TRF. Optional b=256 columns blank = no open marker.
+case,method,mape_mean,mape_std,mape_unit,time_b1_ms,time_b1_std_ms,time_b256_ms,time_b256_std_ms,n_seeds
+1,TRF (baseline),2472.67,,fraction,15700,,,,1
+1,TRF (random),0.20,,fraction,3350,,,,1
+1,TRF (noisy),0.03,,fraction,9670,,,,1
+1,CNN,0.07,,fraction,2.02,,,,8
+1,DU,0.04,,fraction,32.80,,,,8
+1,PIDU (ours),0.03,,fraction,42.58,,,,8
+2,TRF (baseline),3.71,,fraction,31090,,,,1
+2,TRF (random),0.21,,fraction,7170,,,,1
+2,TRF (noisy),0.15,,fraction,17850,,,,1
+2,CNN,0.18,,fraction,5.22,,,,8
+2,DU,0.13,,fraction,225.14,,,,8
+2,PIDU (ours),0.11,,fraction,244.33,,,,8

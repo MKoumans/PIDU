@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Physics-infused Deep Unfolding for Initialisation-free Material Parameter Extraction from Optical Spectra"
+type: software
+authors:
+  - family-names: Koumans
+    given-names: Milan
+    email: m.koumans@tue.nl
+    affiliation: "Eindhoven University of Technology"
+
+  - family-names: Stevens
+    given-names: "Tristan S.W."
+  - family-names: Van Sloun
+    given-names: "Ruud J.G."
+  - family-names: Van Mechelen
+    given-names: "J.L.M."
+license: MIT
+repository-code: "https://github.com/MKoumans/PIDU"
+preferred-citation:
+  type: article
+  title: "Physics-infused Deep Unfolding for Initialisation-free Material Parameter Extraction from Optical Spectra"
+  authors:
+    - family-names: Koumans
+      given-names: Milan
+    - family-names: Stevens
+      given-names: "Tristan S.W."
+    - family-names: Van Sloun
+      given-names: "Ruud J.G."
+    - family-names: Van Mechelen
+      given-names: "J.L.M."
+  year: 2026

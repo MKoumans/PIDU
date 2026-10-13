@@ -1,0 +1,38 @@
+# Use case 1 (numerical, single layer): full run configuration.
+# Consumed via `python -m pidu.train --config configs/case1.yaml`; CLI flags override these values.
+usecase: 1
+model: PIDU
+epochs: 200
+device: cuda:0
+
+# Datasets (sizes are powers of 2)
+load_ds: usecase1/case1_{ds_name}_n2_{number}
+ds_sizes: [12, 10, 10]
+exp_ds: false
+nwsn: true
+wgn: 0.0
+
+# Model / optimisation
+unfolds: 3
+optimisation_mode: scale-optics-type
+optimiser: adamw
+optimiser_algo: nash
+lr: 1.0e-4
+weight_decay: 1.0
+batch_size: 256
+betas: [0.9, 0.999]
+eps: 1.0e-4
+clip_grad_norm: 1.0
+loss_alpha: 0.05
+
+scheduler_type: StepLR
+scheduler_step_size1: 10
+scheduler_gamma1: 0.95
+
+mixed_precision: false
+initialiser: xavier
+shuffle: true
+track_gradient: false
+cnn_size: 1.0
+
+output_name: loss

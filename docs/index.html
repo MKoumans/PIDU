@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Physics-infused Deep Unfolding</title>
+<meta name="description" content="PIDU: a learned, initialisation-free optimiser that extracts Drude-Lorentz material parameters from optical spectra in milliseconds, with the physical forward model inside every unfolding stage.">
+<meta property="og:title" content="Physics-infused Deep Unfolding (PIDU)">
+<meta property="og:description" content="Initialisation-free material parameter extraction from optical spectra.">
+<meta property="og:image" content="static/img/method.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#explorer">Skip to the interactive explorer</a>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <span class="venue">Preprint</span>
+
+    <h1>Physics-infused Deep Unfolding</h1>
+    <p class="tagline">Initialisation-free material parameter extraction from optical spectra</p>
+
+    <p class="authors">
+      Milan Koumans<sup>1,*</sup>,
+      Tristan S.W. Stevens<sup>1</sup>,
+      <a href="https://www.tue.nl/en/research/researchers/ruud-van-sloun">Ruud J.G. van Sloun</a><sup>1</sup>
+      and J.L.M. Van Mechelen<sup>1</sup>
+    </p>
+    <p class="affiliations">
+      <sup>1</sup>Signal Processing, Eindhoven University of Technology, The Netherlands<br>
+      <sup>*</sup>Correspondence: <a href="mailto:m.koumans@tue.nl">m.koumans@tue.nl</a>
+    </p>
+
+    <nav class="links" aria-label="Project resources">
+      <a class="btn" href="#" aria-disabled="true" tabindex="-1">
+        <svg viewBox="0 0 384 512" aria-hidden="true"><path d="M320 464c8.8 0 16-7.2 16-16V160H256c-17.7 0-32-14.3-32-32V48H64c-8.8 0-16 7.2-16 16V448c0 8.8 7.2 16 16 16H320zM0 64C0 28.7 28.7 0 64 0H229.5c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64z"/></svg>
+        Paper
+      </a>
+      <a class="btn" href="#" aria-disabled="true" tabindex="-1">
+        <svg viewBox="0 0 448 512" aria-hidden="true"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm96 96H288c17.7 0 32 14.3 32 32s-14.3 32-32 32H160c-17.7 0-32-14.3-32-32s14.3-32 32-32zm0 96H288c17.7 0 32 14.3 32 32s-14.3 32-32 32H160c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/></svg>
+        arXiv
+      </a>
+      <a class="btn" href="https://github.com/MKoumans/PIDU">
+        <svg viewBox="0 0 496 512" aria-hidden="true"><path d="M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8z"/></svg>
+        Code
+      </a>
+      <a class="btn" href="https://huggingface.co/MKoumans/pidu-optical-parameter-extraction">
+        <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M256 0 32 128v256l224 128 224-128V128L256 0zm0 64 168 96-168 96L88 160l168-96zM64 210l160 92v160L64 370V210zm224 252V302l160-92v160l-160 92z"/></svg>
+        Models
+      </a>
+      <a class="btn" href="https://huggingface.co/datasets/MKoumans/pidu-data">
+        <svg viewBox="0 0 448 512" aria-hidden="true"><path d="M448 80v48c0 44.2-100.3 80-224 80S0 172.2 0 128V80C0 35.8 100.3 0 224 0S448 35.8 448 80zM393.2 214.7c20.8-7.4 39.9-16.9 54.8-28.6V288c0 44.2-100.3 80-224 80S0 332.2 0 288V186.1c14.9 11.8 34 21.2 54.8 28.6C99.7 230.7 159.5 240 224 240s124.3-9.3 169.2-25.3zM0 346.1c14.9 11.8 34 21.2 54.8 28.6C99.7 390.7 159.5 400 224 400s124.3-9.3 169.2-25.3c20.8-7.4 39.9-16.9 54.8-28.6V432c0 44.2-100.3 80-224 80S0 476.2 0 432V346.1z"/></svg>
+        Data
+      </a>
+    </nav>
+  </div>
+</header>
+
+<section id="fits">
+  <div class="wrap">
+    <h2>Fitting in three steps</h2>
+    <p class="lead">
+      A least-squares solver (TRF) needs a starting point and many iterations. PIDU starts without one and
+      finishes in three unfolding stages, each re-simulating the spectrum of its current estimate.
+    </p>
+
+    <figure class="fits" id="fit-pool">
+      <div class="viewer-controls">
+        <div class="chips" role="group" aria-label="Dataset" data-fits="cases"></div>
+        <button class="chip chip-icon" type="button" data-fits="next" aria-label="Show another fit">
+          <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M403.8 34.4c12-5 25.7-2.2 34.9 6.9l64 64c6 6 9.4 14.1 9.4 22.6s-3.4 16.6-9.4 22.6l-64 64c-9.2 9.2-22.9 11.9-34.9 6.9S384 204.9 384 192V160H352c-10.1 0-19.6 4.7-25.6 12.8L284 229.3 244 176l31.2-41.6C293.3 110.2 321.8 96 352 96h32V64c0-12.9 7.8-24.6 19.8-29.6zM164 282.7L204 336l-31.2 41.6C154.7 401.8 126.2 416 96 416H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H96c10.1 0 19.6-4.7 25.6-12.8L164 282.7zm274.6 188c-9.2 9.2-22.9 11.9-34.9 6.9s-19.8-16.6-19.8-29.6V416H352c-30.2 0-58.7-14.2-76.8-38.4L121.6 172.8c-6-8.1-15.5-12.8-25.6-12.8H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H96c30.2 0 58.7 14.2 76.8 38.4L326.4 339.2c6 8.1 15.5 12.8 25.6 12.8h32V320c0-12.9 7.8-24.6 19.8-29.6s25.7-2.2 34.9 6.9l64 64c6 6 9.4 14.1 9.4 22.6s-3.4 16.6-9.4 22.6l-64 64z"/></svg>
+          another fit
+        </button>
+      </div>
+      <div class="paper-frame fits-frame">
+        <img data-fits="img" alt="" width="920" height="710" decoding="async">
+        <div class="loading" data-fits="loading">loading</div>
+      </div>
+      <figcaption data-fits="caption">
+        Top: measured spectrum and the spectrum simulated from the current estimate. Below: three tracked
+        parameters against the update step, with the reference value dashed.
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="highlights">
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat">
+        <b>0</b>
+        <span>initial guesses needed, while matching least-squares fitting started near the ground truth on simulated data</span>
+      </div>
+      <div class="stat">
+        <b>45%</b>
+        <span>lower error on experimental SrTiO<sub>3</sub> terahertz spectra than near-truth-initialised fitting</span>
+      </div>
+      <div class="stat">
+        <b>62 to 69%</b>
+        <span>lower error than randomly initialised least-squares fitting</span>
+      </div>
+      <div class="stat">
+        <b>10&times; to 10<sup>4</sup>&times;</b>
+        <span>faster inference, with a fixed latency of three forward-model evaluations</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="abstract">
+  <div class="wrap narrow">
+    <h2>Abstract</h2>
+    <p>
+      Parameter estimation from optical data is a highly non-linear inverse problem which typically requires
+      expert knowledge for proper convergence. Conventional optimisation methods remain the predominant approach
+      for inferring model parameters from observational data; however, many existing solvers are computationally
+      expensive, exhibit strong sensitivity to initialisation, or require expert tuning. In this work, we introduce
+      <em>physics-infused deep unfolding</em> (PIDU), a learned optimisation framework that enables fixed-latency,
+      real-time parameter extraction from optical data. PIDU leverages the paradigm of deep unfolding while
+      explicitly incorporating the physical forward model at each iteration stage, enabling end-to-end learning of
+      update rules that are driven by physics-based residuals. Introducing a physics-based layer improves
+      convergence without requiring manual intervention or favourable initialisation conditions. We demonstrate
+      that, without any initialisation, PIDU matches the accuracy of least-squares fitting initialised near the
+      ground truth on numerical data, and outperforms it by 45% when extracting the optical material parameters of
+      SrTiO<sub>3</sub> from experimental terahertz spectra. Compared with randomly initialised fitting, PIDU
+      reduces the error by 62% to 69%, while accelerating inference by one to four orders of magnitude.
+      Furthermore, we evaluate the performance of residual-based inference against purely data-driven approaches on
+      experimental data. We find that the inductive bias yields a 26% improvement in accuracy. Ultimately, PIDU
+      offers a fast, initialisation-free alternative to iterative fitting for parameter extraction from optical
+      spectra.
+    </p>
+  </div>
+</section>
+
+<section id="method">
+  <div class="wrap">
+    <h2>Method</h2>
+    <p class="lead">
+      An iterative solver, unrolled into a fixed number of learned stages, with the physics kept in the loop.
+    </p>
+    <figure class="method">
+      <div class="paper-frame">
+        <img src="static/img/method.png" width="1501" height="1082" loading="lazy" decoding="async"
+             alt="PIDU architecture: K unfolding stages. In stage k the estimate p^k is passed through the transfer matrix method to simulate a spectrum, which is stacked with the measurement and fed to a CNN backbone with two detection heads that predict the update delta p.">
+      </div>
+    </figure>
+    <div class="steps">
+      <div class="step">
+        <span class="step-n">1</span>
+        <h3>Simulate</h3>
+        <p>The current estimate <b>p</b><sup>k</sup> goes through a differentiable transfer-matrix model (TMM),
+          which gives the spectrum <i>&#375;</i><sup>k</sup> that these parameters would produce.</p>
+      </div>
+      <div class="step">
+        <span class="step-n">2</span>
+        <h3>Compare</h3>
+        <p>The measurement and the simulation are stacked as channels, so the network sees the physics residual
+          and not only the data.</p>
+      </div>
+      <div class="step">
+        <span class="step-n">3</span>
+        <h3>Update</h3>
+        <p>A CNN backbone with detection heads at two spectral scales finds each resonance and predicts the
+          update &Delta;<b>p</b>. Three stages, trained end to end, replace hundreds of solver iterations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="explorer" class="experiment-section">
+  <div class="wrap">
+    <span class="section-eyebrow">Interactive</span>
+    <h2>Explore PIDU's predictions</h2>
+    <p class="lead">
+      Pick a test spectrum and step through the unfolding stages. Step 0 is PIDU's own initial estimate;
+      every later step is one physics-informed update.
+    </p>
+
+    <figure class="explorer" id="explorer-figure">
+      <div class="viewer-controls explorer-controls">
+        <div class="ctl">
+          <span class="ctl-label" id="ex-case-label">data</span>
+          <div class="chips" role="group" aria-labelledby="ex-case-label" data-ex="cases"></div>
+        </div>
+        <div class="ctl ctl-grow">
+          <label class="ctl-label" for="ex-sample">spectrum</label>
+          <div class="slider-row">
+            <input type="range" id="ex-sample" data-ex="sample" min="0" max="0" step="1" value="0">
+            <output data-ex="sample-out" for="ex-sample">#0</output>
+          </div>
+        </div>
+        <div class="ctl ctl-grow">
+          <label class="ctl-label" for="ex-step">unfolding step</label>
+          <div class="slider-row">
+            <button class="play" type="button" data-ex="play" aria-label="Play the unfolding steps">
+              <svg class="icon-play" viewBox="0 0 384 512" aria-hidden="true"><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg>
+              <svg class="icon-pause" viewBox="0 0 320 512" aria-hidden="true"><path d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"/></svg>
+            </button>
+            <input type="range" id="ex-step" data-ex="step" min="0" max="3" step="1" value="3">
+            <output data-ex="step-out" for="ex-step">3 / 3</output>
+          </div>
+        </div>
+      </div>
+
+      <div class="explorer-stage">
+        <div class="explorer-plots" data-ex="plots"></div>
+        <div class="explorer-side">
+          <div class="mape">
+            <span class="ctl-label">mean abs. % error (final)</span>
+            <b data-ex="mape">&ndash;</b>
+          </div>
+          <table class="params">
+            <thead><tr><th>parameter</th><th>reference</th><th>PIDU</th><th>error</th></tr></thead>
+            <tbody data-ex="params"></tbody>
+          </table>
+        </div>
+        <div class="loading" data-ex="loading">loading</div>
+      </div>
+      <figcaption>
+        Predictions from the released checkpoints on held-out simulated test spectra, precomputed so the page
+        stays fast. Use case 2 also has the two transmission channels that the model gets as input. Oscillator
+        parameters: <i>&omega;</i><sub>0</sub> resonance frequency, <i>&omega;</i><sub>p</sub> strength,
+        <i>&gamma;</i> damping (cm<sup>&minus;1</sup>).
+      </figcaption>
+    </figure>
+
+    <div class="live">
+      <p>Want any of the 1024 test spectra? Run PIDU live on a CPU in the Hugging Face demo.</p>
+      <!-- Once the Space is up: drop aria-disabled/tabindex, or embed it with
+           <iframe src="https://mkoumans-pidu-demo.hf.space" loading="lazy" title="PIDU live demo"></iframe> -->
+      <a class="btn" href="https://huggingface.co/spaces/MKoumans/pidu-demo" aria-disabled="true" tabindex="-1">Open the live demo</a>
+    </div>
+  </div>
+</section>
+
+<section id="results">
+  <div class="wrap">
+    <h2>Accuracy against speed</h2>
+    <p class="lead">
+      Without an initial guess, PIDU reaches the accuracy of fitting started near the answer, one to four
+      orders of magnitude faster.
+    </p>
+    <figure>
+      <div class="paper-frame">
+        <img src="static/img/summary.png" width="1800" height="731" loading="lazy" decoding="async"
+             alt="Mean absolute percentage error against inference time per spectrum for TRF baselines, CNN, DU and PIDU, for numerical data and for experimental SrTiO3 data.">
+      </div>
+      <figcaption>
+        Mean absolute percentage error against inference time per spectrum for <b>(a)</b> simulated data (reference:
+        ground truth) and <b>(b)</b> experimental SrTiO<sub>3</sub> data (reference: expert manual fit). Filled
+        markers: batch size 1; open markers: batch size 256. TRF needs an initialisation, with increasing prior
+        knowledge from <i>baseline</i> (all parameters one) through <i>random</i> to <i>noisy</i> (reference
+        &plusmn;20%).
+      </figcaption>
+    </figure>
+
+    <h3 class="sub">Experimental validation on SrTiO<sub>3</sub></h3>
+    <p class="body-text">
+      We extract the optical parameters of bulk SrTiO<sub>3</sub> from 75 multi-channel terahertz measurements
+      taken from 4&nbsp;K to room temperature: reflection power spectra plus complex transmission. PIDU is trained
+      on simulations only, with empirical noise profiles calibrated to close the gap between simulation and
+      measurement. On the measurements it outperforms the same unfolded network without the physics residual by
+      26%, and tracks the temperature-dependent soft mode close to an expert's manual fit.
+    </p>
+    <figure>
+      <div class="paper-frame">
+        <img src="static/img/case2-data.png" width="1800" height="1278" loading="lazy" decoding="async"
+             alt="Measured, simulated and residual SrTiO3 spectra at 180 K for reflection and the real and imaginary transmission, with the empirical noise profiles.">
+      </div>
+      <figcaption>
+        Reflection <i>R</i> <b>(a)</b> and real <b>(b)</b> and imaginary <b>(c)</b> transmission <i>t</i> of
+        SrTiO<sub>3</sub>. <b>(&middot;.1)</b> Measured, simulated and residual spectra at 180&nbsp;K, with the TO1,
+        TO2 and TO3 phonon modes marked. <b>(&middot;.2)</b> Empirical noise profiles used for training.
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="bibtex">
+  <div class="wrap">
+    <h2>BibTeX</h2>
+    <pre class="bibtex"><button class="copy-btn" type="button" data-copy="#bibtex-entry">copy</button><code id="bibtex-entry">@article{koumans2026pidu,
+  title   = {Physics-infused Deep Unfolding for Initialisation-free Material
+             Parameter Extraction from Optical Spectra},
+  author  = {Koumans, Milan and Stevens, Tristan S. W. and
+             van Sloun, Ruud J. G. and Van Mechelen, J. L. M.},
+  journal = {arXiv preprint},
+  year    = {2026}
+}</code></pre>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>
+      Code released under the <a href="https://github.com/MKoumans/PIDU/blob/main/LICENSE">MIT licence</a>.
+      Data and model weights on <a href="https://huggingface.co/MKoumans">Hugging Face</a> (CC BY 4.0).
+    </p>
+    <p>
+      Page source lives in <code>docs/</code> of the <a href="https://github.com/MKoumans/PIDU">project repository</a>.
+      The authors acknowledge Gijs Dubbelman and Tommie Kerssies (TU/e) for the hardware used in this study.
+    </p>
+  </div>
+</footer>
+
+<script src="static/fits/manifest.js"></script>
+<script src="static/explorer/manifest.js"></script>
+<script src="static/js/main.js"></script>
+</body>
+</html>
