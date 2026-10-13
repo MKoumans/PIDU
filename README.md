@@ -2,7 +2,7 @@
 
 **Physics-infused Deep Unfolding for Initialisation-free Material Parameter Extraction from Optical Spectra**
 
-Milan Koumans¹, Tristan S.W. Stevens¹, Ruud J.G. van Sloun¹ and J.L.M. Van Mechelen¹
+[Milan Koumans](https://www.tue.nl/en/research/researchers/milan-koumans)¹, [Tristan S.W. Stevens](https://www.tue.nl/en/research/researchers/tristan-stevens)¹, [Ruud J.G. van Sloun](https://www.tue.nl/en/research/researchers/ruud-van-sloun)¹ and [J.L.M. Van Mechelen](https://www.tue.nl/en/research/researchers/dook-van-mechelen)¹
 
 ¹ Signal Processing, Eindhoven University of Technology, Eindhoven, The Netherlands
 
